@@ -1,6 +1,26 @@
 {
-  "name": "nino-nakano-bot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+	"name": "nino-nakano-bot",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"dev": "concurrently \"yarn run watch-compile\" \"yarn run watch-dev\"",
+		"watch-compile": "swc src -w --out-dir dist",
+		"watch-dev": "nodemon --env-file .env --watch \"dist/**/*\" -e js ./dist/index.js",
+		"build": "swc src -d dist",
+		"start": "node dist/index.js",
+		"tsc": "tsc"
+	},
+	"devDependencies": {
+		"@swc/cli": "^0.1.62",
+		"@swc/core": "^1.3.95",
+		"@types/node": "^20.8.10",
+		"concurrently": "^8.2.2",
+		"nodemon": "^3.0.1",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.2.2"
+	},
+	"dependencies": {
+		"discord.js": "^14.13.0"
+	}
 }
