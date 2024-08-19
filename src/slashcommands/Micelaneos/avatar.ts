@@ -1,4 +1,4 @@
-import { EmbedBuilder, Client, CommandInteraction, ButtonBuilder, ActionRowBuilder } from 'discord.js'
+import { EmbedBuilder, ButtonBuilder, ActionRowBuilder } from 'discord.js'
 import { SlashCommand } from '@/interface/slashCommandsInterface'
 
 export const command: SlashCommand = {
@@ -12,8 +12,7 @@ export const command: SlashCommand = {
 			require: false,
 		},
 	],
-	async execute(_client: Client, int: CommandInteraction) {
-		// Obtenemos el usuario mencionado y en caso de no encontrarlo el usuario que uso el comando
+	async execute(_client, int) {
 		let user = int.options.getUser('member') || int.user
 
 		const button = new ButtonBuilder()
@@ -32,7 +31,6 @@ export const command: SlashCommand = {
 		const embed = new EmbedBuilder()
 			.setColor('Random')
 			.setDescription(`Este es el avatar de ${user.username}\n`)
-			// Obtenemos el avatar del usuario y lo asignamos al embed
 			.setImage(user.displayAvatarURL({ size: 1024, extension: 'png'}))
 			.setFooter({
 				text: 'Creado por MAKIGAWA',

@@ -1,4 +1,4 @@
-import { EmbedBuilder, Client, CommandInteraction} from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 import { SlashCommand } from '@/interface/slashCommandsInterface'
 
 export const command: SlashCommand = {
@@ -12,30 +12,20 @@ export const command: SlashCommand = {
 			require: true,
 		},
 	],
-	async execute(_client: Client, int: CommandInteraction) {
+	async execute(_client, int) {
 		const user = int.options.getUser('member')
 
-		if (user != int.user) {
-			let gif = await fetch('https://api.waifu.pics/sfw/hug')
-				.then(r => r.json())
-				.then(data => data.url)
+		if (user) {
+			const gifResponse = await fetch('https://api.waifu.pics/sfw/hug')
+			const gifData = await gifResponse.json()
+			const gif = gifData.url
 
 			const embed = new EmbedBuilder()
 				.setColor('Random')
 				.setDescription(
-					`${int.user.username} le dio un abrazo a ${user?.username}`
-				)
-				.setImage(gif)
-			await int.reply({ embeds: [embed] })
-		} else if (user === int.user) {
-			let gif = await fetch('https://api.waifu.pics/sfw/hug')
-				.then(r => r.json())
-				.then(data => data.url)
-
-			const embed = new EmbedBuilder()
-				.setColor('Random')
-				.setDescription(
-					`${int.user.username} le dio un abrazo a un ser imaginario`
+					user !== int.user
+						? `${int.user.username} le dio un abrazo a ${user.username}`
+						: `${int.user.username} le dio un abrazo a un ser imaginario`
 				)
 				.setImage(gif)
 			await int.reply({ embeds: [embed] })

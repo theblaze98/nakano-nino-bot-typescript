@@ -3,53 +3,46 @@ import { SlashCommand } from '@/interface/slashCommandsInterface'
 
 export const command: SlashCommand = {
 	name: 'userinfo',
-	description: 'Muestra la informacion de un miembro del server',
+	description: 'Muestra la información de un miembro del server',
 	options: [
 		{
 			name: 'member',
 			type: 6,
-			description: 'Menciona al miembro del q quieres el avatar',
+			description: 'Menciona al miembro del que quieres el avatar',
 			require: false,
 		},
 	],
 	async execute(_client: Client, int: CommandInteraction) {
-		let user = int.options.getUser('member') || int.user
-		let member = int.guild?.members.cache.get(user.id)
+		const user = int.options.getUser('member') || int.user
+		const member = int.guild?.members.cache.get(user.id)
 		const nickname = member?.nickname || 'No tiene alias'
-		const role = member?.roles.cache
+		const roles =
+			member?.roles.cache
+				.sort((a, b) => b.position - a.position)
+				.map(role => role.toString())
+				.slice(0, -1)
+				.join(', ') || 'No tiene roles'
+
 		const embed = new EmbedBuilder()
 			.setColor('Random')
 			.setThumbnail(user.avatarURL())
 			.setDescription(
-				`**Usuario**: ${user.tag}
-                **Alias**: ${nickname}
-				**ID**: ${user.id}`
+				`**Usuario**: ${user.tag}\n**Alias**: ${nickname}\n**ID**: ${user.id}`
 			)
 			.addFields(
 				{
-					name: 'Se unio a discord',
-					value: `\`${new Date(user.createdTimestamp)
-						.toString()
-						.split(/ +/)
-						.slice(0, -4)
-						.toString()
-						.replaceAll(',', ' ')}\``,
+					name: 'Se unió a Discord',
+					value: `\`${new Date(user.createdTimestamp).toLocaleDateString()}\``,
 				},
 				{
-					name: 'Se unio al server',
-					value: `\`${new Date(member.joinedTimestamp)
-						.toString()
-						.split(/ +/)
-						.slice(0, -4)
-						.toString()
-						.replaceAll(',', ' ')}\``,
+					name: 'Se unió al server',
+					value: `\`${new Date(
+						member?.joinedTimestamp || 0
+					).toLocaleDateString()}\``,
 				},
 				{
 					name: 'Roles',
-					value: `${role ? role
-						.sort((a, b) => b.position - a.position)
-						.map(role => role.toString())
-						.slice(0, -1) : ''}`,
+					value: roles,
 				}
 			)
 			.setFooter({
@@ -57,6 +50,7 @@ export const command: SlashCommand = {
 				iconURL:
 					'https://w0.peakpx.com/wallpaper/209/412/HD-wallpaper-anime-the-quintessential-quintuplets-nino-nakano.jpg',
 			})
+
 		await int.reply({ embeds: [embed] })
 	},
 }

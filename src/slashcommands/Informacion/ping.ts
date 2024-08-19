@@ -1,4 +1,4 @@
-import { EmbedBuilder, Client, CommandInteraction } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 import { SlashCommand } from '@/interface/slashCommandsInterface'
 
 const gifs = [
@@ -13,7 +13,7 @@ export const command: SlashCommand = {
 	name: 'ping',
 	description: 'Muestra la latencia del bot',
 	options: [],
-	async execute(client: Client, int: CommandInteraction) {
+	async execute(client, int) {
 		const embed = new EmbedBuilder()
 			.setColor('Random')
 			.setDescription(
