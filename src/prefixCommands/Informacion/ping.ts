@@ -15,7 +15,7 @@ export const command: IPrefixCommands = {
   desc: "Muestra el ping del bot",
   use: "+ping",
   run: async (client, message, _args) => {
-    const nickname = message.guild?.members.cache.get(message.author.id)?.nickname
+    const nickname = message.guild?.members.cache.get(message.author.id)?.displayName
 
     const embed = new EmbedBuilder()
 			.setColor('Random')

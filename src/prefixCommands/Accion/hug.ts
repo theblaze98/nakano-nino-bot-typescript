@@ -18,7 +18,7 @@ export const command: IPrefixCommands = {
 				.setColor('Random')
 				.setDescription(
 					user !== message.author
-						? `${message.author.username} le dio un abrazo a ${user.username}`
+						? `${message.author.displayName} le dio un abrazo a ${user.displayName}`
 						: `${message.author.username} le dio un abrazo a un ser imaginario`
 				)
 				.setImage(gif)

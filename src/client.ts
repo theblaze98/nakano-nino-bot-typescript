@@ -4,7 +4,6 @@ import {
 	GatewayIntentBits,
 	Partials,
 	PresenceUpdateStatus,
-  Collection
 } from 'discord.js'
 
 export const client = new Client({
@@ -12,6 +11,7 @@ export const client = new Client({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildPresences,
 		GatewayIntentBits.MessageContent,
 	],
 	partials: [
