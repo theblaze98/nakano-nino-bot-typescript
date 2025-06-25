@@ -3,7 +3,7 @@ import { IPrefixCommands } from '@/interface'
 
 export const command: IPrefixCommands = {
 	name: 'hug',
-	alias: ['abrazo'],
+	alias: [],
 	desc: 'Abrazas a un miembro del server',
 	use: '+hug <miembro>',
 	async run(_client, message, _args) {
